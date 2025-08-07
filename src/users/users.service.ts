@@ -11,6 +11,6 @@ export class UsersService {
   }
 
   findOne(user: User) {
-    return this.users.find(u => u.email === user.email);
+    return this.users.find((u) => u.email === user.email);
   }
 }
