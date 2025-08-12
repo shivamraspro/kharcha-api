@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from '../users/users.service';
 import { User } from '../users/types/user.interface';
-import { LoginDto, SignupDto } from './dto';
+import { LoginDto, SignupDto } from './dtos';
 
 @Injectable()
 export class AuthService {
