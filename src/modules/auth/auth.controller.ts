@@ -6,13 +6,13 @@ import {
   UseGuards,
   Request,
 } from '@nestjs/common';
-import { CreateUserDto } from '../users/dtos/create-user.dto';
-import { AuthService } from './auth.service';
+import { CreateUserDto } from 'src/modules/users/dtos/create-user.dto';
+import { AuthService } from 'src/modules/auth/auth.service';
 import { Serialize } from 'src/common/interceptors/serialize.interceptor';
 import { ClientSafeUserDto } from 'src/common/dtos/client-safe-user.dto';
-import { LocalAuthGuard } from './local-auth.guard';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { AuthenticatedUser } from './types/authenticated-user.type';
+import { LocalAuthGuard } from 'src/modules/auth/local-auth.guard';
+import { JwtAuthGuard } from 'src/modules/auth/jwt-auth.guard';
+import { AuthenticatedUser } from 'src/modules/auth/types/authenticated-user.type';
 
 @Controller('auth')
 export class AuthController {

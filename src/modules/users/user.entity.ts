@@ -1,4 +1,4 @@
-import { BaseKhEntity } from 'src/utils/base.entity';
+import { BaseKhEntity } from 'src/common/entities/base-kh.entity';
 import { Entity, PrimaryGeneratedColumn, Column, Generated } from 'typeorm';
 
 @Entity('users')
