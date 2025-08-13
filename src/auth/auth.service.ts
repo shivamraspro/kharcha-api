@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { SignupDto } from 'src/common/dtos/signup.dto';
+import { CreateUserDto } from '../users/dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class AuthService {
 
   constructor(private readonly usersService: UsersService) {}
 
-  async signup(body: SignupDto) {
+  async createUser(body: CreateUserDto) {
     // Check if the user exists
     const user = await this.usersService.findOne({ email: body.email });
     if (user) throw new BadRequestException('This email is already in use');
@@ -24,5 +24,21 @@ export class AuthService {
     });
 
     return newUser;
+  }
+
+  async validateUser(email: string, password: string) {
+    // Check if the user exists
+    const user = await this.usersService.findOne({ email });
+
+    // Check if the passwords match
+    const passwordsMatch =
+      user && (await bcrypt.compare(password, user.password));
+
+    if (passwordsMatch) {
+      const { password: _, ...userWithoutPassword } = user;
+      return userWithoutPassword;
+    }
+
+    return null;
   }
 }
