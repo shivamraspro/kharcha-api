@@ -15,7 +15,7 @@ export class UsersService {
     return this.repo.save(newUser);
   }
 
-  findOneByUuid(uuid: string) {
-    return this.repo.find({ where: { uuid } });
+  findOne(findBy: Record<'uuid', string> | Record<'email', string>) {
+    return this.repo.findOne({ where: findBy });
   }
 }
