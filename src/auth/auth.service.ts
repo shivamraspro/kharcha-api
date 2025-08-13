@@ -1,13 +1,18 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
+import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { AuthenticatedUser } from './types/authenticated-user.type';
 
 @Injectable()
 export class AuthService {
   private readonly saltRounds = 10;
 
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly jwtService: JwtService,
+  ) {}
 
   async createUser(body: CreateUserDto) {
     // Check if the user exists
@@ -35,10 +40,19 @@ export class AuthService {
       user && (await bcrypt.compare(password, user.password));
 
     if (passwordsMatch) {
-      const { password: _, ...userWithoutPassword } = user;
-      return userWithoutPassword;
+      const { email, name, uuid } = user;
+      return { email, name, uuid } as AuthenticatedUser;
     }
 
     return null;
+  }
+
+  login(user: AuthenticatedUser) {
+    const jwtPayload = {
+      user,
+    };
+    return {
+      accessToken: this.jwtService.sign(jwtPayload),
+    };
   }
 }

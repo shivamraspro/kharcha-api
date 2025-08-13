@@ -10,9 +10,11 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string): Promise<any> {
-    // passport-local expects a full user if validation is successful
+    // passport-local expects a user object if validation is successful
     const user = await this.authService.validateUser(email, password);
     if (!user) throw new UnauthorizedException('Invalid credentials');
+
+    // This authenticated user will be available in the request object
     return user;
   }
 }
