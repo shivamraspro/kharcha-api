@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from '../users/dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { AuthenticatedUser } from './types/authenticated-user.type';
+import { JwtPayload } from './types/jwtPayload.type';
 
 @Injectable()
 export class AuthService {
@@ -48,7 +49,7 @@ export class AuthService {
   }
 
   login(user: AuthenticatedUser) {
-    const jwtPayload = {
+    const jwtPayload: JwtPayload = {
       user,
     };
     return {
