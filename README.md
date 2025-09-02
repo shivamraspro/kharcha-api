@@ -20,6 +20,14 @@ postgres=# create role kharcha_user login password '<password>';
 postgres=# create database kharcha owner kharcha_user;
 ```
 
+## Environment variables
+```bash
+$ cp .env.example .env
+
+# generate jwt-secret
+$ openssl rand -base64 64
+```
+
 ## Compile and run the project
 
 ```bash
