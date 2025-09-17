@@ -4,6 +4,7 @@ import { AppModule } from 'src/app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors(['http://localhost:5050']);
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // strips properties not in DTO
