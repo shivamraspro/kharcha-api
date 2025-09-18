@@ -1,10 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from 'src/app.module';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  app.enableCors(['http://localhost:5050']);
+  app.enableCors({
+    origin: process.env.FRONTEND_WEB_URL,
+    credentials: true,
+  });
+  app.use(cookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true, // strips properties not in DTO

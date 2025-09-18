@@ -48,11 +48,8 @@ export class AuthService {
   }
 
   login(user: AuthenticatedUser) {
-    const jwtPayload: JwtPayload = {
-      user,
-    };
-    return {
-      accessToken: this.jwtService.sign(jwtPayload),
-    };
+    const jwtPayload: JwtPayload = { user };
+
+    return this.jwtService.sign(jwtPayload);
   }
 }
